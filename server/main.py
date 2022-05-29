@@ -9,20 +9,13 @@ from flask_cors import CORS
 
 import db_controller
 
-
-
 app = Flask(__name__)
-
-
-
-
 
 act_external_id = 0
 act_image_bytes = 0
 
 
-# Внести нового пользователя. При нажатии request берет бэйс64 лица, присваивает идент человеку и отправляет
-# post запрос на макроскоп с добавлением. Создает новую запись в бд с тем же ид.
+# Внесение нового пользователя. Подготавливает данные для подтверждения добавления.
 @app.route('/add_person', methods=['POST'])
 def index():
     global act_external_id, act_image_bytes
@@ -46,6 +39,7 @@ cors = CORS(app, resources={r"/confirm_add_person": {"origins": "*"},
                             r"/withdraw_points": {"origins": "*"}})
 
 
+# Подтверждает добавление нового клиента и делает запись в БД.
 @app.route('/confirm_add_person', methods=['POST'])
 def confirm_add_person():
     content_type = request.headers.get('Content-Type')
@@ -88,6 +82,7 @@ def admin_page():
     return render_template('admin/admin.html')
 
 
+# Добавление баллов клиента.
 @app.route('/add_points', methods=['POST'])
 def add_points():
     content_type = request.headers.get('Content-Type')
@@ -100,6 +95,8 @@ def add_points():
         purchase_amount = json["purchase_amount"]
 
         actual_points = db_controller.get_person_points(id)
+
+        # 0.05 - 5% от суммы заказа - можно менять.
         new_points = int(actual_points + purchase_amount * 0.05)
 
         res = jsonify({"new_points": new_points})
@@ -139,12 +136,10 @@ def withdraw_points():
         return 'Content-Type should be json compatible!'
 
 
-
 # Выводит страницу клиента.
 @app.route('/client', methods=['GET'])
 def client_page():
     return render_template('client/client.html')
-
 
 
 # Выводит страницу клиента с его баллами.
@@ -170,23 +165,5 @@ def show_client_points():
         return 'Content-Type should be json compatible!'
 
 
-# Добавить баллы на счет. Берет id, сумму умножает на проценты, делает запись в моей бд
-
-
-
-# Снять баллы со счет - берет ид, получает текущиее кол-во баллов, вычитает
-
-
-
-# Получить баллы опознанного человека
-
-
-
-
-
 if __name__ == "__main__":
     app.run(debug=True, port=9091)
-
-
-
-

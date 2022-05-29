@@ -24,7 +24,7 @@ def get_person_points(external_id):
     return points_num[0][0]
 
 
-# Добавление баллов.
+# Изменение количества баллов.
 def update_person_points(external_id, new_points):
     connect = sqlite3.connect("clients.db")
     cursor = connect.cursor()
@@ -32,5 +32,3 @@ def update_person_points(external_id, new_points):
     cursor.execute('UPDATE clients SET points_num = ' + str(new_points) + ' WHERE id = "' + external_id + '"')
     connect.commit()
     connect.close()
-
-# Снятие баллов.
