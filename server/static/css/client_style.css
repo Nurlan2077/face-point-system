@@ -1,0 +1,22 @@
+.title { 
+    font-size: 300%; 
+    font-family: Helvetica, sans-serif; 
+    color: white; 
+    text-align: center;
+   }
+
+.title span {
+	padding: 0 10px;
+	background: black;
+}  
+
+p{
+    font-family: Helvetica, sans-serif;
+    font-size: 140%;
+    font-weight: bold;
+}
+
+.tick{
+    font-size: 20em;
+    align-self: center;
+}
