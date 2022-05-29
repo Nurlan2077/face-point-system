@@ -91,16 +91,44 @@ function changeFieldWithdrawal(){
 
 // Отправляет на сервер подтверждение добавления нового клиента.
 function addPerson(){
+
+
+
+
   let xhr = new XMLHttpRequest();
   xhr.open("POST", "http://127.0.0.1:9091/confirm_add_person");
   xhr.setRequestHeader("Accept", "application/json");
   xhr.setRequestHeader("Content-Type", "application/json");
 
+  
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       console.log(xhr.status);
-      console.log(xhr.responseText);
+
+      console.log(JSON.parse(xhr.responseText)["ErrorMessage"]); 
+
+      if (JSON.parse(xhr.responseText)["ErrorMessage"])
+      {
+        new Toast({
+          title: false,
+          text: 'Попробуйте еще!',
+          theme: 'dark',
+          autohide: true,
+          interval: 3000
+        });
+      } 
+      else{
+        new Toast({
+          title: false,
+          text: 'Успешно добавлен новый клиент!',
+          theme: 'success',
+          autohide: true,
+          interval: 3000
+        });
+      }
+
+      
     }};
 
   let data = JSON.stringify({"confirm": "yes"});
@@ -202,3 +230,4 @@ function withdrawPoints(){
 
   xhr.send(data);
 }
+
