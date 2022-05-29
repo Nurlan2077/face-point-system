@@ -18,5 +18,8 @@ p{
 
 .tick{
     font-size: 20em;
-    align-self: center;
+}
+
+.center-flip{
+    text-align: center;
 }
