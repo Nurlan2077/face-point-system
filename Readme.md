@@ -4,5 +4,4 @@
 4. Запустить socket_controller.py
 5. Запустить info.py
 6. Перейти на localhost:9091/admin или /client
-7. ???
-8. PROFIT!!!
+
